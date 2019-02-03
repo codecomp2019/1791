@@ -50,12 +50,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //First Page Buttons
     Button choose;
     //Second Page Buttons
-    Button read;
+    Button read1;
     Button gallery;
     Button next;
     //Third Page Buttons
-    Button read1;
+    Button about;
     Button newMeme;
+    ImageView imageView;
+    TextView textView;
 
     //Meme
     String memeURL = "";
@@ -80,34 +82,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 gallery.setOnClickListener(this);
                 next.setOnClickListener(this);*/
                 this.setContentView(R.layout.image_area);
-                read1 =  findViewById(R.id.read1);
+                about =  findViewById(R.id.about);
                 newMeme =  findViewById(R.id.newMeme);
-                read1.setOnClickListener(this);
+                about.setOnClickListener(this);
                 newMeme.setOnClickListener(this);
-                ImageView imageView1 = findViewById(R.id.imageView1);
-                openImage(imageView1);
+                imageView = findViewById(R.id.imageView);
+                imageView.setOnClickListener(this);
+                openImage(imageView);
+                textView = findViewById(R.id.textView);
+                textView.setVisibility(textView.VISIBLE);
                 break;
-            case R.id.read1:
+            case R.id.about:
                 //read the image in selected
-                readImage();
                 if (memeMatched)getContext();
                 break;
-            case R.id.gallery:
+           /* case R.id.gallery:
                 //openGallery
                 ImageView imageViewNext = findViewById(R.id.imageView);
                 openImage(imageViewNext);
                 break;
-            case R.id.next:
+            case R.id.next1:
                 this.setContentView(R.layout.image_area);
-                read1 =  findViewById(R.id.read1);
+                read1 =  findViewById(R.id.read);
                 newMeme =  findViewById(R.id.newMeme);
                 read1.setOnClickListener(this);
                 newMeme.setOnClickListener(this);
-                break;
+                break;*/
             case R.id.newMeme:
                 //openGallery
-                imageView1 = findViewById(R.id.imageView1);
-                openImage(imageView1);
+                imageView = findViewById(R.id.imageView);
+                openImage(imageView);
+                break;
+            case R.id.imageView:
+                readImage();
                 break;
 
         }
@@ -120,14 +127,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.image_area);
         setContentView(R.layout.next);
         setContentView(R.layout.start_buttons);
-        choose = (Button) findViewById(R.id.choose);
+        choose =  findViewById(R.id.choose);
         choose.setOnClickListener(this);
 
 
 
         
         if (OpenCVLoader.initDebug()){
-            Toast.makeText(getApplicationContext(), "YO", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "YO\nAnd welcome!", Toast.LENGTH_SHORT).show();
         }
         // This is the part that does speaking
         t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -175,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         memeAbout = builder.toString();
                         t1.speak(memeAbout, TextToSpeech.QUEUE_ADD, null);
-                        Toast.makeText(getApplicationContext(), memeAbout, Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(getApplicationContext(), memeAbout, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -263,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             }
-            Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();//generate toast
+           // Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();//generate toast
         }
         else{
             Toast.makeText(getApplicationContext(), "No meme has been selected.",Toast.LENGTH_LONG).show();
