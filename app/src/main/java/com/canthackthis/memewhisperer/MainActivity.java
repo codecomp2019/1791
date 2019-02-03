@@ -24,12 +24,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static org.jsoup.Connection.Method.HEAD;
+
 public class MainActivity extends AppCompatActivity {
     TextToSpeech t1;
-<<<<<<< HEAD
     private TextView result;
-=======
->>>>>>> 00b6fac13835cb1b2aea8ee249d77536dea0115b
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +50,6 @@ public class MainActivity extends AppCompatActivity {
         });
         t1.speak("Put your words right here", TextToSpeech.QUEUE_FLUSH, null);
 
-<<<<<<< HEAD
-    }
-    public void onPause(){
-        if(t1 !=null){
-            t1.stop();
-            t1.shutdown();
-        }
-        super.onPause();
     }
 
     private void getContext(){
@@ -131,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Calculates the histogram of an image and compares it against template database;
     //Returns entry that is a best match and has over a .50 similarity.
-    private Map.Entry<String, Mat> findMatch(Mat meme, HashMap<String, Mat> templates){
+    private Map.Entry<String, Mat> findMatch(Mat meme, HashMap<String, Mat> templates) {
         double res = 0;
         double max = 0;
         Map.Entry<String, Mat> match = null;
@@ -155,14 +146,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return match;
-=======
-        public void onPause(){
-            if(t1 !=null){
-                t1.stop();
-                t1.shutdown();
-            }
-            super.onPause();
+    }
+    public void onPause() {
+        if (t1 != null) {
+            t1.stop();
+            t1.shutdown();
         }
->>>>>>> 00b6fac13835cb1b2aea8ee249d77536dea0115b
+        super.onPause();
     }
 }
