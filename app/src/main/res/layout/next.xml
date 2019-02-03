@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    >
+
+    <!--Background Image-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/bkg"
+        android:scaleType="center"
+        />
+
+    <!--doggu-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:background="@drawable/one"
+        android:scaleType="centerCrop"
+        android:layout_margin="10dp"
+
+        />
+
+    <!--brian-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:background="@drawable/two"
+        android:scaleType="centerCrop"
+        android:layout_margin="10dp"
+
+        />
+
+    <!--pengiu-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:background="@drawable/three"
+        android:scaleType="centerCrop"
+        android:layout_margin="10dp"
+
+        />
+
+    <!--otherpengui-->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:background="@drawable/four"
+        android:scaleType="fitCenter"
+        android:layout_margin="10dp"
+        />
+
+    <!--Button to go to the next image-->
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Read the Meme"
+        android:textSize="20dp"
+        android:textColor="#000"
+        android:background="#fff"
+        android:layout_above="@id/read"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"/>
+    <!--Button to Read-->
+    <Button
+        android:id="@+id/read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Next Meme"
+        android:textSize="20dp"
+        android:padding="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000"
+        android:background="#fff"
+        android:layout_margin="20dp"/>
+    <!--Button to go to the next image-->
+    <Button
+        android:id="@+id/gallery"
+        android:layout_width="71dp"
+        android:layout_height="27dp"
+        android:layout_above="@id/read"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="-110dp"
+        android:layout_marginStart="340dp"
+        android:background="#fff"
+        android:text="scrum"
+        android:textColor="#000"
+        android:textSize="20dp"/>
+
+
+
+
+
+</RelativeLayout>
