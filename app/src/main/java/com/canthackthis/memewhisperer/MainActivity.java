@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 newMeme =  findViewById(R.id.newMeme);
                 read1.setOnClickListener(this);
                 newMeme.setOnClickListener(this);
+                ImageView imageView1 = findViewById(R.id.imageView1);
+                openImage(imageView1);
                 break;
             case R.id.read1:
                 //read the image in selected
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.newMeme:
                 //openGallery
-                ImageView imageView1 = findViewById(R.id.imageView1);
+                imageView1 = findViewById(R.id.imageView1);
                 openImage(imageView1);
 
         }
