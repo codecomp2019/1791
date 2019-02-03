@@ -17,10 +17,7 @@ import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -40,41 +37,60 @@ public class GalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
         OpenCVLoader.initDebug();
         final Button buttonGallery = (Button) findViewById(R.id.gallery);
-       // final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        final Button buttonRead = (Button) findViewById(R.id.read);
+        final ImageView imageView = findViewById(R.id.imageView);
+
+        // final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         //recyclerView.getResources();
       //  recyclerView.draw();
         buttonGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setAction(android.content.Intent.ACTION_PICK);
-                intent.setType("image/*");
-                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivityForResult(intent,RESULT_LOAD_IMG);
+                openImage();
+                imageView.setImageBitmap(selectedImage);//set image to new bitmap
             }
         });
-        final ImageView imageView = findViewById(R.id.imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();//build text recognizer
                 Mat matOrg = new Mat();
                 Mat matGry = new Mat();
+                readImage();
+            //    Utils.bitmapToMat(selectedImage,matOrg);//bitmap to mat original
+            //    Imgproc.cvtColor(matOrg,matGry, Imgproc.COLOR_BGR2GRAY);//original to grayscale
+            //    Core.bitwise_not(matGry,matGry);//inverse graytogray
+            //    Imgproc.equalizeHist(matGry,matGry);//increasecontrast
+            //    Bitmap selectedImageGry = selectedImage;//initialize new bitmap
+            //    Utils.matToBitmap(matGry,selectedImageGry);//revert gray to new bitmap
 
-                Utils.bitmapToMat(selectedImage,matOrg);//bitmap to mat original
-                Imgproc.cvtColor(matOrg,matGry, Imgproc.COLOR_BGR2GRAY);//original to grayscale
-                Core.bitwise_not(matGry,matGry);//inverse graytogray
-                Imgproc.equalizeHist(matGry,matGry);//increasecontrast
-                Bitmap selectedImageGry = selectedImage;//initialize new bitmap
-                Utils.matToBitmap(matGry,selectedImageGry);//revert gray to new bitmap
-                imageView.setImageBitmap(selectedImageGry);//set image to new bitmap
-                Frame frame = new Frame.Builder().setBitmap(selectedImageGry).build();//create frame of bitmap
-                Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();//generate toast
+            }
+        });
+        buttonRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                readImage();
             }
         });
     }
 
-//    protected
+    protected void readImage(){
+        if(selectedImage!=null){
+            TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();//build text recognizer
+            Frame frame = new Frame.Builder().setBitmap(selectedImage).build();//create frame of bitmap
+            Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();//generate toast
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No meme has been selected.",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    protected void openImage(){
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_PICK);
+        intent.setType("image/*");
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivityForResult(intent,RESULT_LOAD_IMG);
+    }
 
 
 

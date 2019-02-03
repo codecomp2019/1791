@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,6 +19,10 @@
         android:id="@+id/gallery"
         android:layout_width="400dp"
         android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="201dp"
+        android:layout_marginEnd="5dp"
         android:text="Gallery"
         tools:layout_editor_absoluteX="5dp"
         tools:layout_editor_absoluteY="456dp"/>
@@ -27,6 +31,10 @@
         android:id="@+id/gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/gallery"
+        android:layout_marginBottom="294dp"
+        android:layout_marginStart="3dp"
         android:text="Gray"
         tools:layout_editor_absoluteX="220dp"
         tools:layout_editor_absoluteY="535dp"/>
@@ -35,6 +43,10 @@
         android:id="@+id/contrast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="292dp"
+        android:layout_marginEnd="19dp"
         android:text="Contrast"
         tools:layout_editor_absoluteX="112dp"
         tools:layout_editor_absoluteY="535dp"/>
@@ -43,6 +55,10 @@
         android:id="@+id/invert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/contrast"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="1dp"
+        android:layout_toStartOf="@+id/contrast"
         android:text="Invert"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="535dp"/>
@@ -51,6 +67,10 @@
         android:id="@+id/read"
         android:layout_width="217dp"
         android:layout_height="103dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="31dp"
+        android:layout_marginStart="3dp"
+        android:layout_toEndOf="@+id/gray"
         android:text="Read"
         tools:layout_editor_absoluteX="91dp"
         tools:layout_editor_absoluteY="598dp"/>
@@ -59,6 +79,10 @@
         android:id="@+id/original"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/contrast"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="-2dp"
         android:text="Revert"
         tools:layout_editor_absoluteX="315dp"
         tools:layout_editor_absoluteY="535dp"/>
@@ -79,4 +103,4 @@
         app:layout_constraintTop_toTopOf="@+id/divider"
         tools:layout_editor_absoluteX="0dp"/>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
