@@ -15,6 +15,45 @@
         android:scaleType="center"
         />
 
+    <!--doggu-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:background="@drawable/one"
+        android:scaleType="centerCrop"
+        android:layout_margin="10dp"
+
+        />
+
+    <!--brian-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:background="@drawable/two"
+        android:scaleType="centerCrop"
+        android:layout_margin="10dp"
+
+        />
+
+    <!--pengiu-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:background="@drawable/three"
+        android:scaleType="centerCrop"
+        android:layout_margin="10dp"
+
+        />
+
+    <!--otherpengui-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:background="@drawable/four"
+        android:scaleType="centerCrop"
+        android:layout_margin="10dp"
+        />
+
     <!--Button to go to the next image-->
     <Button
         android:id="@+id/next"
