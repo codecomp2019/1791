@@ -28,7 +28,7 @@
         android:contentDescription="Choose a Meme button"
         android:padding="20dp"
         android:text="Choose a meme"
-        android:textColor="#000"
+        android:textColor="#ffff"
         android:textSize="20dp"/>
 
 
