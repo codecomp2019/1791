@@ -7,25 +7,18 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!--Background Image-->
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@drawable/bkg"
-        android:scaleType="center"
-        />
-
     <!--Space for Image-->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <!--Space for spacer-->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"/>
+        android:layout_weight="2" />
+
 
 
 </LinearLayout>
