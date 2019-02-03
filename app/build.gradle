@@ -1,10 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    packagingOptions {
-        exclude 'META-INF/CHANGES'
-        exclude "META-INF/README.md"
-    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.canthackthis.memewhisperer"
@@ -20,15 +16,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-<<<<<<< Updated upstream
-=======
-    sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jniLibs'] } }
-   /* externalNativeBuild {
-        ndkBuild {
-            path file('build/intermediates/ndk/debug/Android.mk')
-        }
-    }*/
->>>>>>> Stashed changes
 }
 
 dependencies {
@@ -38,9 +25,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-<<<<<<< Updated upstream
-=======
-    implementation project(':openCVLibrary343')
-    implementation files('libs/jsoup-1.11.3.jar')
->>>>>>> Stashed changes
 }
