@@ -6,17 +6,22 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+//import org.bytedeco.javacpp.*;
+//import static org.bytedeco.javacpp.lept.*;
+//import static org.bytedeco.javacpp.tesseract.*;
 
 public class GalleryActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMG = 1;
@@ -27,6 +32,9 @@ public class GalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
 
         final Button buttonGallery = (Button) findViewById(R.id.gallery);
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView.getResources();
+      //  recyclerView.draw();
         buttonGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,7 +49,10 @@ public class GalleryActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Tesseract tess = new Tesseract();
+                //tess.doOCR(selectedImage);
                 TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+                opencv.new();
                 Frame frame = new Frame.Builder().setBitmap(selectedImage).build();
                 Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();
             }

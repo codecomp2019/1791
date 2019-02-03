@@ -35,4 +35,15 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic[0]"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="395dp"
+        android:layout_height="271dp"
+        tools:itemCount="50"
+        tools:layoutManager="GridLayoutManager"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="452dp"
+        tools:listitem="@layout/recycler_view_item"
+        tools:spanCount="5"/>
 </android.support.constraint.ConstraintLayout>
