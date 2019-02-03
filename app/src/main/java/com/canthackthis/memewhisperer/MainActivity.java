@@ -120,9 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.image_area);
         setContentView(R.layout.next);
         setContentView(R.layout.start_buttons);
-        temp = (Button) findViewById(R.id.temp);
         choose = (Button) findViewById(R.id.choose);
-        temp.setOnClickListener(this);
         choose.setOnClickListener(this);
 
 
