@@ -57,21 +57,27 @@ public class GalleryActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+                TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();//build text recognizer
                 Mat matOrg = new Mat();
                 Mat matGry = new Mat();
-                Utils.bitmapToMat(selectedImage,matOrg);
-                Imgproc.cvtColor(matOrg,matGry, Imgproc.COLOR_BGR2GRAY);
-                Core.bitwise_not(matGry,matGry);
-                Imgproc.equalizeHist(matGry,matGry);
-                Bitmap selectedImageGry = selectedImage;
-                imageView.setImageBitmap(selectedImageGry);
-                Utils.matToBitmap(matGry,selectedImageGry);
-                Frame frame = new Frame.Builder().setBitmap(selectedImageGry).build();
-                Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();
+
+                Utils.bitmapToMat(selectedImage,matOrg);//bitmap to mat original
+                Imgproc.cvtColor(matOrg,matGry, Imgproc.COLOR_BGR2GRAY);//original to grayscale
+                Core.bitwise_not(matGry,matGry);//inverse graytogray
+                Imgproc.equalizeHist(matGry,matGry);//increasecontrast
+                Bitmap selectedImageGry = selectedImage;//initialize new bitmap
+                Utils.matToBitmap(matGry,selectedImageGry);//revert gray to new bitmap
+                imageView.setImageBitmap(selectedImageGry);//set image to new bitmap
+                Frame frame = new Frame.Builder().setBitmap(selectedImageGry).build();//create frame of bitmap
+                Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();//generate toast
             }
         });
     }
+
+    protected
+
+
+
 
     protected String convertDetectToString(SparseArray<TextBlock> text){
 
