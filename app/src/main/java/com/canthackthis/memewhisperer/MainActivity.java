@@ -1,10 +1,13 @@
 package com.canthackthis.memewhisperer;
 
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     TextToSpeech t1;
@@ -29,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
         });
         t1.speak("Put your words right here", TextToSpeech.QUEUE_FLUSH, null);
 
-        public void onPause(){
-            if(t1 !=null){
-                t1.stop();
-                t1.shutdown();
-            }
-            super.onPause();
+    }
+    public void onPause(){
+        if(t1 !=null){
+            t1.stop();
+            t1.shutdown();
         }
+        super.onPause();
     }
 }
