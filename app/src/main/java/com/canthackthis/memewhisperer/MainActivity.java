@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button gallery;
     Button next;
     //Third Page Buttons
-    Button read;
+    Button about;
     Button newMeme;
     ImageView imageView;
     TextView textView;
@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 gallery.setOnClickListener(this);
                 next.setOnClickListener(this);*/
                 this.setContentView(R.layout.image_area);
-                read =  findViewById(R.id.read);
+                about =  findViewById(R.id.about);
                 newMeme =  findViewById(R.id.newMeme);
-                read.setOnClickListener(this);
+                about.setOnClickListener(this);
                 newMeme.setOnClickListener(this);
                 imageView = findViewById(R.id.imageView);
                 imageView.setOnClickListener(this);
@@ -92,9 +92,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 textView = findViewById(R.id.textView);
                 textView.setVisibility(textView.VISIBLE);
                 break;
-            case R.id.read:
+            case R.id.about:
                 //read the image in selected
-                readImage();
                 if (memeMatched)getContext();
                 break;
            /* case R.id.gallery:
@@ -113,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //openGallery
                 imageView = findViewById(R.id.imageView);
                 openImage(imageView);
+                break;
+            case R.id.imageView:
+                readImage();
                 break;
 
         }
