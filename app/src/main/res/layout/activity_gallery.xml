@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GalleryActivity">
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="395dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="395dp"/>
+
+    <Button
+        android:id="@+id/gallery"
+        android:layout_width="400dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="201dp"
+        android:layout_marginEnd="5dp"
+        android:text="Gallery"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="456dp"/>
+
+    <Button
+        android:id="@+id/gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/gallery"
+        android:layout_marginBottom="294dp"
+        android:layout_marginStart="3dp"
+        android:text="Gray"
+        tools:layout_editor_absoluteX="220dp"
+        tools:layout_editor_absoluteY="535dp"/>
+
+    <Button
+        android:id="@+id/contrast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="292dp"
+        android:layout_marginEnd="19dp"
+        android:text="Contrast"
+        tools:layout_editor_absoluteX="112dp"
+        tools:layout_editor_absoluteY="535dp"/>
+
+    <Button
+        android:id="@+id/invert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/contrast"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="1dp"
+        android:layout_toStartOf="@+id/contrast"
+        android:text="Invert"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="535dp"/>
+
+    <Button
+        android:id="@+id/read"
+        android:layout_width="217dp"
+        android:layout_height="103dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="31dp"
+        android:layout_marginStart="3dp"
+        android:layout_toEndOf="@+id/gray"
+        android:text="Read"
+        tools:layout_editor_absoluteX="91dp"
+        tools:layout_editor_absoluteY="598dp"/>
+
+    <Button
+        android:id="@+id/original"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/contrast"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="-2dp"
+        android:text="Revert"
+        tools:layout_editor_absoluteX="315dp"
+        tools:layout_editor_absoluteY="535dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="418dp"
+        android:layout_height="404dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:srcCompat="@tools:sample/backgrounds/scenic[0]"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="416dp"
+        android:layout_height="395dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="@+id/divider"
+        tools:layout_editor_absoluteX="0dp"/>
+
+</RelativeLayout>
