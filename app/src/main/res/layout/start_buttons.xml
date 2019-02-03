@@ -11,6 +11,12 @@
         android:background="@drawable/bkg"
         android:scaleType="center"
         />
+    <ImageView
+        android:id="@+id/imageViewTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        />
 
     <!--Button to go to image-->
     <Button

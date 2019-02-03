@@ -1,12 +1,22 @@
 package com.canthackthis.memewhisperer;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseArray;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,23 +28,99 @@ import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
 import org.opencv.imgproc.Imgproc;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.jsoup.Connection.Method.HEAD;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     TextToSpeech t1;
     private TextView result;
+    private static int RESULT_LOAD_IMG = 1;
+    private Bitmap selectedImage = null;
+    private ImageView currentImageView;
+   // private Button
+    static{
+        System.loadLibrary("opencv_java3");
 
+    }
+    //First Page Buttons
+    Button temp;
+    Button choose;
+    //Second Page Buttons
+    Button read;
+    Button gallery;
+    Button next;
+    //Third Page Buttons
+    Button read1;
+    Button newMeme;
+
+    //onClick implementation
+    public void onClick(View v) {
+        // Perform action on click
+        switch(v.getId()) {
+            case R.id.choose:
+                //Proceed to the next layout
+               /* this.setContentView(R.layout.next);
+                read =  findViewById(R.id.read);
+                gallery =  findViewById(R.id.gallery);
+                next =  findViewById(R.id.next);
+                read.setOnClickListener(this);
+                gallery.setOnClickListener(this);
+                next.setOnClickListener(this);*/
+                this.setContentView(R.layout.image_area);
+                read1 =  findViewById(R.id.read1);
+                newMeme =  findViewById(R.id.newMeme);
+                read1.setOnClickListener(this);
+                newMeme.setOnClickListener(this);
+                break;
+            case R.id.read1:
+                //read the image in selected
+                readImage();
+                break;
+            case R.id.gallery:
+                //openGallery
+                ImageView imageViewNext = findViewById(R.id.imageView);
+                openImage(imageViewNext);
+                break;
+            case R.id.next:
+                this.setContentView(R.layout.image_area);
+                read1 =  findViewById(R.id.read1);
+                newMeme =  findViewById(R.id.newMeme);
+                read1.setOnClickListener(this);
+                newMeme.setOnClickListener(this);
+                break;
+            case R.id.temp:
+                //Create imageview and update it to an Image from Gallery
+                ImageView imageViewTemp = findViewById(R.id.imageViewTemp);
+                openImage(imageViewTemp);
+                readImage();
+                break;
+            case R.id.newMeme:
+                //openGallery
+                ImageView imageView1 = findViewById(R.id.imageView1);
+                openImage(imageView1);
+
+        }
+    }
+
+    //onCreate override
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_area);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.next);
+        setContentView(R.layout.start_buttons);
+        temp = (Button) findViewById(R.id.temp);
+        choose = (Button) findViewById(R.id.choose);
+        temp.setOnClickListener(this);
+        choose.setOnClickListener(this);
+
+
+
         
         if (OpenCVLoader.initDebug()){
             Toast.makeText(getApplicationContext(), "YO", Toast.LENGTH_SHORT).show();
@@ -50,6 +136,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         t1.speak("Put your words right here", TextToSpeech.QUEUE_FLUSH, null);
+
+
+
+
 
     }
 
@@ -148,6 +238,66 @@ public class MainActivity extends AppCompatActivity {
         }
         return match;
     }
+
+    protected void readImage(){
+        if(selectedImage!=null){
+            TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();//build text recognizer
+            Frame frame = new Frame.Builder().setBitmap(selectedImage).build();//create frame of bitmap
+            Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();//generate toast
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No meme has been selected.",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    protected void openImage(ImageView imageView){
+        currentImageView = imageView;
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_PICK);
+        intent.setType("image/*");
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivityForResult(intent,RESULT_LOAD_IMG);
+    }
+
+    protected String convertDetectToString(SparseArray<TextBlock> text){
+
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i=0; i<text.size(); i++){
+            // Toast.makeText(getApplicationContext(),text.valueAt(i).getValue(),Toast.LENGTH_LONG).show();;
+            String str = text.valueAt(i).getValue();
+            stringBuilder.append(str + " ");
+
+
+        }
+        return stringBuilder.toString();
+    }
+
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+
+
+        if (resultCode == RESULT_OK) {
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                selectedImage = BitmapFactory.decodeStream(imageStream);//Image bitmap
+                currentImageView.setImageBitmap(selectedImage);
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+
+        }else {
+            Toast.makeText(getApplicationContext(), "You haven't picked Image",Toast.LENGTH_LONG).show();
+        }
+    }
+
+
     public void onPause() {
         if (t1 != null) {
             t1.stop();

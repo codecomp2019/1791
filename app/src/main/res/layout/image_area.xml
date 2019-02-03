@@ -14,22 +14,30 @@
         android:background="@drawable/bkg"
         android:scaleType="center" />
 
+    <!--imageView-->
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_margin="10dp"
+        />
 
     <!--Button to go to the next image-->
     <Button
-        android:id="@+id/next"
+        android:id="@+id/read1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Read the Meme"
         android:textSize="20dp"
         android:textColor="#000"
         android:background="#fff"
-        android:layout_above="@id/read"
+        android:layout_above="@id/newMeme"
         android:layout_centerHorizontal="true"
         android:padding="20dp"/>
     <!--Button to Read-->
     <Button
-        android:id="@+id/read"
+        android:id="@+id/newMeme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select new meme"
