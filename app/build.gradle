@@ -55,4 +55,5 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     // compile group: 'org.bytedeco.javacpp-presets', name: tesseract + '-platform', version: moduleVersion + '-1.4.4'
     implementation project(':openCVLibrary343')
+
 }

@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
@@ -17,22 +16,31 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
+import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-//import org.bytedeco.javacpp.*;
-//import static org.bytedeco.javacpp.lept.*;
-//import static org.bytedeco.javacpp.tesseract.*;
+
+
+
 
 public class GalleryActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMG = 1;
     private Bitmap selectedImage = null;
+    static{
+        System.loadLibrary("opencv_java3");
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-
+        OpenCVLoader.initDebug();
         final Button buttonGallery = (Button) findViewById(R.id.gallery);
-        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+       // final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         //recyclerView.getResources();
       //  recyclerView.draw();
         buttonGallery.setOnClickListener(new View.OnClickListener() {
@@ -49,11 +57,17 @@ public class GalleryActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Tesseract tess = new Tesseract();
-                //tess.doOCR(selectedImage);
                 TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-                opencv.new();
-                Frame frame = new Frame.Builder().setBitmap(selectedImage).build();
+                Mat matOrg = new Mat();
+                Mat matGry = new Mat();
+                Utils.bitmapToMat(selectedImage,matOrg);
+                Imgproc.cvtColor(matOrg,matGry, Imgproc.COLOR_BGR2GRAY);
+                Core.bitwise_not(matGry,matGry);
+                Imgproc.equalizeHist(matGry,matGry);
+                Bitmap selectedImageGry = selectedImage;
+                imageView.setImageBitmap(selectedImageGry);
+                Utils.matToBitmap(matGry,selectedImageGry);
+                Frame frame = new Frame.Builder().setBitmap(selectedImageGry).build();
                 Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();
             }
         });
