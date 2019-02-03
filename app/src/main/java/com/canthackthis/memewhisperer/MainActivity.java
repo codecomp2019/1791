@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
     //First Page Buttons
-    Button temp;
     Button choose;
     //Second Page Buttons
     Button read;
@@ -57,6 +56,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Third Page Buttons
     Button read1;
     Button newMeme;
+
+    //Meme
+    String memeURL = "";
+    String memeName = "";
+    String memeAbout = "";
+    boolean memeMatched = false;
+
+    //Database
+    HashMap<String, Mat> map = new HashMap<String, Mat>();
 
     //onClick implementation
     public void onClick(View v) {
@@ -82,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.read1:
                 //read the image in selected
                 readImage();
+                if (memeMatched)getContext();
                 break;
             case R.id.gallery:
                 //openGallery
@@ -95,16 +104,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 read1.setOnClickListener(this);
                 newMeme.setOnClickListener(this);
                 break;
-            case R.id.temp:
-                //Create imageview and update it to an Image from Gallery
-                ImageView imageViewTemp = findViewById(R.id.imageViewTemp);
-                openImage(imageViewTemp);
-                readImage();
-                break;
             case R.id.newMeme:
                 //openGallery
                 imageView1 = findViewById(R.id.imageView1);
                 openImage(imageView1);
+                break;
 
         }
     }
@@ -132,13 +136,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onInit(int status) {
                 if(status != TextToSpeech.ERROR) {
-                    t1.setLanguage(Locale.JAPANESE);
-                    t1.setSpeechRate((float).5);
+                    t1.setLanguage(Locale.ENGLISH);
+                    t1.setSpeechRate((float)1);
                 }
             }
         });
         t1.speak("Put your words right here", TextToSpeech.QUEUE_FLUSH, null);
-
+        initializeMap(map);
 
 
 
@@ -152,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 final StringBuilder builder = new StringBuilder();
 
                 try {
-                    Document doc = Jsoup.connect("https://knowyourmeme.com/memes/bad-luck-brian").get();
+                    Document doc = Jsoup.connect("https://knowyourmeme.com/memes/" + memeURL).get();
                     String title = doc.title();
                     Element content = doc.getElementById("entry_body");
                     Element about = content.getElementsByTag("p").first();
@@ -171,7 +175,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        result.setText(builder.toString());
+                        memeAbout = builder.toString();
+                        t1.speak(memeAbout, TextToSpeech.QUEUE_ADD, null);
+                        Toast.makeText(getApplicationContext(), memeAbout, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -183,34 +189,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Bitmap adv = BitmapFactory.decodeResource(getResources(), R.drawable.t_advice_dog);
         Bitmap pen = BitmapFactory.decodeResource(getResources(), R.drawable.t_socially_awkward_penguin);
         Bitmap blb = BitmapFactory.decodeResource(getResources(), R.drawable.t_bad_luck_brian);
+        Bitmap ggg = BitmapFactory.decodeResource(getResources(), R.drawable.t_good_guy_greg);
+        Bitmap twbg = BitmapFactory.decodeResource(getResources(), R.drawable.t_that_would_be_great);
         Mat im1 = new Mat();
         Mat im2 = new Mat();
         Mat im3 = new Mat();
+        Mat im4 = new Mat();
+        Mat im5 = new Mat();
         Utils.bitmapToMat(adv, im1);
         Utils.bitmapToMat(pen, im2);
         Utils.bitmapToMat(blb, im3);
+        Utils.bitmapToMat(ggg, im4);
+        Utils.bitmapToMat(twbg, im5);
         map.put("Advice Dog", im1);
         map.put("Socially Awkward Penguin", im2);
         map.put("Bad Luck Brian", im3);
-        //ignore below until relative paths are figured out
-        /*File dir = new File("../../res/drawable/");
-        Log.v("Files", dir.getAbsolutePath());
-        String path = "";
-        File [] files = dir.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].getName().substring(0, 1) == "t_") { //"t_" signifies a template to include in the HashMap
-                Bitmap image = BitmapFactory.decodeFile("../../res/drawable/" + files[i].getName());
-                Mat img = new Mat();
-                Utils.bitmapToMat(image, img); //Convert image to Mat for processing
-                String[] filename = files[i].getName().split("_"); //Format name for display
-                String name = "";
-                for (int j = 1; j < filename.length; j++) {
-                    name += filename[j] + " ";
-                }
-                name = name.substring(0, name.length() - 4);
-                map.put(name, img); //Add template to map
-            }
-        }*/
+        map.put("Good Guy Greg", im4);
+        map.put("That Would Be Great", im5);
+
     }
 
     //Calculates the histogram of an image and compares it against template database;
@@ -245,6 +241,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(selectedImage!=null){
             TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();//build text recognizer
             Frame frame = new Frame.Builder().setBitmap(selectedImage).build();//create frame of bitmap
+            Mat img = new Mat();
+            Utils.bitmapToMat(selectedImage, img);
+            Map.Entry<String, Mat> meme = findMatch(img, map);
+            if (meme != null){
+                memeMatched = true;
+                memeName = meme.getKey();
+                memeURL = memeName;
+                String[] s = memeURL.split(" ");
+                memeURL = "";
+                for (int x = 0; x < s.length; x++){
+                    memeURL += s[x] + "-";
+                }
+                memeURL = memeURL.substring(0, memeURL.length()-1);
+                memeURL = memeURL.toLowerCase();
+                t1.speak(memeName+". . . . . . . . "+convertDetectToString(textRecognizer.detect(frame))+". . . . . . . . ", TextToSpeech.QUEUE_FLUSH, null);
+
+            }
+            else{
+                memeMatched = false;
+                t1.speak("There was no match found for this meme. . . . . . . . ", TextToSpeech.QUEUE_FLUSH, null);
+                t1.speak(convertDetectToString(textRecognizer.detect(frame)), TextToSpeech.QUEUE_ADD, null);
+
+
+            }
             Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();//generate toast
         }
         else{
@@ -306,5 +326,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             t1.shutdown();
         }
         super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    t1.setLanguage(Locale.ENGLISH);
+                    t1.setSpeechRate((float)1);
+                }
+            }
+            });
+        super.onResume();
     }
 }
