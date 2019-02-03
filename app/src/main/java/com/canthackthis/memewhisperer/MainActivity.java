@@ -38,22 +38,18 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     TextToSpeech t1;
-    private TextView result;
     private static int RESULT_LOAD_IMG = 1;
     private Bitmap selectedImage = null;
     private ImageView currentImageView;
-   // private Button
+
     static{
         System.loadLibrary("opencv_java3");
 
     }
+
     //First Page Buttons
     Button choose;
     //Second Page Buttons
-    Button read1;
-    Button gallery;
-    Button next;
-    //Third Page Buttons
     Button about;
     Button newMeme;
     ImageView imageView;
@@ -74,13 +70,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()) {
             case R.id.choose:
                 //Proceed to the next layout
-               /* this.setContentView(R.layout.next);
-                read =  findViewById(R.id.read);
-                gallery =  findViewById(R.id.gallery);
-                next =  findViewById(R.id.next);
-                read.setOnClickListener(this);
-                gallery.setOnClickListener(this);
-                next.setOnClickListener(this);*/
                 this.setContentView(R.layout.image_area);
                 about =  findViewById(R.id.about);
                 newMeme =  findViewById(R.id.newMeme);
@@ -96,18 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //read the image in selected
                 if (memeMatched)getContext();
                 break;
-           /* case R.id.gallery:
-                //openGallery
-                ImageView imageViewNext = findViewById(R.id.imageView);
-                openImage(imageViewNext);
-                break;
-            case R.id.next1:
-                this.setContentView(R.layout.image_area);
-                read1 =  findViewById(R.id.read);
-                newMeme =  findViewById(R.id.newMeme);
-                read1.setOnClickListener(this);
-                newMeme.setOnClickListener(this);
-                break;*/
             case R.id.newMeme:
                 //openGallery
                 imageView = findViewById(R.id.imageView);
@@ -125,13 +102,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_area);
-        setContentView(R.layout.next);
         setContentView(R.layout.start_buttons);
         choose =  findViewById(R.id.choose);
         choose.setOnClickListener(this);
-
-
-
         
         if (OpenCVLoader.initDebug()){
             Toast.makeText(getApplicationContext(), "YO\nAnd welcome!", Toast.LENGTH_SHORT).show();
@@ -148,9 +121,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         t1.speak("Put your words right here", TextToSpeech.QUEUE_FLUSH, null);
         initializeMap(map);
-
-
-
 
     }
 
@@ -171,8 +141,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     builder.append(title).append("\n");
                     builder.append("\n").append(context);
 
-                    // builder.append("\n").append("About : ").append(about.attr("p")).append(about.text());
-
                 } catch (IOException e) {
                     builder.append("error : ").append(e.getMessage()).append("\n");
                 }
@@ -182,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         memeAbout = builder.toString();
                         t1.speak(memeAbout, TextToSpeech.QUEUE_ADD, null);
-                      //  Toast.makeText(getApplicationContext(), memeAbout, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -270,7 +237,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             }
-           // Toast.makeText(getApplicationContext(), convertDetectToString(textRecognizer.detect(frame)),Toast.LENGTH_LONG).show();//generate toast
         }
         else{
             Toast.makeText(getApplicationContext(), "No meme has been selected.",Toast.LENGTH_LONG).show();
@@ -282,7 +248,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent();
         intent.setAction(android.content.Intent.ACTION_PICK);
         intent.setType("image/*");
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivityForResult(intent,RESULT_LOAD_IMG);
     }
 
@@ -292,7 +257,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringBuilder stringBuilder = new StringBuilder();
 
         for (int i=0; i<text.size(); i++){
-            // Toast.makeText(getApplicationContext(),text.valueAt(i).getValue(),Toast.LENGTH_LONG).show();;
             String str = text.valueAt(i).getValue();
             stringBuilder.append(str + " ");
 
@@ -304,7 +268,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-
 
         if (resultCode == RESULT_OK) {
             try {
@@ -325,6 +288,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    //On Pause implementation
     public void onPause() {
         if (t1 != null) {
             t1.stop();
@@ -333,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
     }
 
+    //On Resume Override
     @Override
     public void onResume(){
         t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
