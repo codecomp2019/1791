@@ -47,7 +47,7 @@
 
     <!--otherpengui-->
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="500dp"
         android:background="@drawable/four"
@@ -57,19 +57,19 @@
 
     <!--Button to go to the next image-->
     <Button
-        android:id="@+id/next"
+        android:id="@+id/next1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Read the Meme"
         android:textSize="20dp"
         android:textColor="#000"
         android:background="#fff"
-        android:layout_above="@id/read"
+        android:layout_above="@id/read1"
         android:layout_centerHorizontal="true"
         android:padding="20dp"/>
     <!--Button to Read-->
     <Button
-        android:id="@+id/read"
+        android:id="@+id/read1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Go to Next Meme"
@@ -82,10 +82,10 @@
         android:layout_margin="20dp"/>
     <!--Button to go to the next image-->
     <Button
-        android:id="@+id/gallery"
+        android:id="@+id/gallery1"
         android:layout_width="71dp"
         android:layout_height="27dp"
-        android:layout_above="@id/read"
+        android:layout_above="@id/read1"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="-110dp"
         android:layout_marginStart="340dp"
