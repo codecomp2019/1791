@@ -4,9 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <!--Background Image-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/bkg"
+        android:scaleType="center"
+        />
 
     <!--Space for Image-->
     <ImageView
