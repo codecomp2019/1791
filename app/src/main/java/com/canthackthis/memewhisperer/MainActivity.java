@@ -26,7 +26,10 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     TextToSpeech t1;
+<<<<<<< HEAD
     private TextView result;
+=======
+>>>>>>> 00b6fac13835cb1b2aea8ee249d77536dea0115b
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         });
         t1.speak("Put your words right here", TextToSpeech.QUEUE_FLUSH, null);
 
+<<<<<<< HEAD
     }
     public void onPause(){
         if(t1 !=null){
@@ -151,5 +155,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return match;
+=======
+        public void onPause(){
+            if(t1 !=null){
+                t1.stop();
+                t1.shutdown();
+            }
+            super.onPause();
+        }
+>>>>>>> 00b6fac13835cb1b2aea8ee249d77536dea0115b
     }
 }
