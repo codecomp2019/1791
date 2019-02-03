@@ -84,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.about:
                 //read the image in selected
                 if (memeMatched)getContext();
+                else {
+                    memeMatched = false;
+                    t1.speak("There was no match found for this meme. . . . . . . . ", TextToSpeech.QUEUE_FLUSH, null);
+                }
                 break;
             case R.id.newMeme:
                 //openGallery
@@ -107,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         choose.setOnClickListener(this);
         
         if (OpenCVLoader.initDebug()){
-            Toast.makeText(getApplicationContext(), "YO\nAnd welcome!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "   YO\nAnd welcome!", Toast.LENGTH_SHORT).show();
         }
         // This is the part that does speaking
         t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -212,7 +216,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void readImage(){
         if(selectedImage!=null){
             TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();//build text recognizer
-            Frame frame = new Frame.Builder().setBitmap(selectedImage).build();//create frame of bitmap
+            Bitmap top = Bitmap.createBitmap(selectedImage, 0, 0, selectedImage.getWidth(), selectedImage.getHeight()/2);
+            Bitmap bot = Bitmap.createBitmap(selectedImage, 0, selectedImage.getHeight()/2, selectedImage.getWidth(), selectedImage.getHeight()/2);
+            Frame frameTop = new Frame.Builder().setBitmap(top).build();//create frame of bitmap
+            Frame frameBot = new Frame.Builder().setBitmap(bot).build();//create frame of bitmap
             Mat img = new Mat();
             Utils.bitmapToMat(selectedImage, img);
             Map.Entry<String, Mat> meme = findMatch(img, map);
@@ -227,14 +234,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 memeURL = memeURL.substring(0, memeURL.length()-1);
                 memeURL = memeURL.toLowerCase();
-                t1.speak(memeName+". . . . . . . . "+convertDetectToString(textRecognizer.detect(frame))+". . . . . . . . ", TextToSpeech.QUEUE_FLUSH, null);
-
+                t1.speak(memeName, TextToSpeech.QUEUE_FLUSH, null);
+                t1.playSilentUtterance(300, TextToSpeech.QUEUE_ADD, null);
+                t1.speak(convertDetectToString(textRecognizer.detect(frameTop)), TextToSpeech.QUEUE_ADD, null);
+                t1.playSilentUtterance(500, TextToSpeech.QUEUE_ADD, null);
+                t1.speak(convertDetectToString(textRecognizer.detect(frameBot)), TextToSpeech.QUEUE_ADD, null);
+                t1.playSilentUtterance(300, TextToSpeech.QUEUE_ADD, null);
             }
             else{
                 memeMatched = false;
                 t1.speak("There was no match found for this meme. . . . . . . . ", TextToSpeech.QUEUE_FLUSH, null);
-                t1.speak(convertDetectToString(textRecognizer.detect(frame)), TextToSpeech.QUEUE_ADD, null);
-
+                t1.playSilentUtterance(300, TextToSpeech.QUEUE_ADD, null);
+                t1.speak(convertDetectToString(textRecognizer.detect(frameTop)), TextToSpeech.QUEUE_ADD, null);
+                t1.playSilentUtterance(500, TextToSpeech.QUEUE_ADD, null);
+                t1.speak(convertDetectToString(textRecognizer.detect(frameBot)), TextToSpeech.QUEUE_ADD, null);
+                t1.playSilentUtterance(300, TextToSpeech.QUEUE_ADD, null);
 
             }
         }
