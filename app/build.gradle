@@ -12,6 +12,8 @@ android {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/INDEX.LIST'
         exclude 'META-INF/versionchanges.txt'
+        exclude 'META-INF/CHANGES'
+        exclude "META-INF/README.md"
     }
     compileSdkVersion 28
     defaultConfig {
@@ -55,5 +57,5 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     // compile group: 'org.bytedeco.javacpp-presets', name: tesseract + '-platform', version: moduleVersion + '-1.4.4'
     implementation project(':openCVLibrary343')
-
+    implementation files('libs/jsoup-1.11.3.jar')
 }

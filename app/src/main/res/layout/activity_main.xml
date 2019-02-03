@@ -1,38 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="416dp"
-        android:layout_height="395dp"
-        tools:layout_editor_absoluteX="-5dp"/>
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="395dp"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="395dp"/>
-
-    <Button
-        android:id="@+id/gallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="396dp"/>
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="418dp"
-        android:layout_height="404dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:srcCompat="@tools:sample/backgrounds/scenic[0]"/>
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
